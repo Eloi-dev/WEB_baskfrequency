@@ -1,8 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import SkeletonLoad from '../custom/SkeletonLoad';
+import { makeStyles } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
-import AdherentsTab from '../components/Adherents/AllAdherentsTab';
 import { connect } from 'react-redux';
+
+import LastAdherentsTab from './LastAdherentsTab';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -12,22 +14,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Adherents = (props) => {
+const LastAdherents = (props) => {
   const classes = useStyles();
   const { adherents } = props;
-
+  
   return (
     <React.Fragment>
-    <Paper className={classes.paper}>
-        <AdherentsTab
+      <Paper className={classes.paper}>
+        {props.adherents.loading ? <SkeletonLoad/> : (
+          <LastAdherentsTab
           adherents={adherents}/>
+        )}
       </Paper>
     </React.Fragment>
-  );
+  )
 }
 
 const mapStateToProps = state => {
   return state
 }
 
-export default connect(mapStateToProps)(Adherents);
+export default connect(mapStateToProps)(LastAdherents);

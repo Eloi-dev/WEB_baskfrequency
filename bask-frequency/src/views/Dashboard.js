@@ -3,27 +3,11 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Chart from '../components/Chart';
-import Deposits from '../components/Deposits';
-import Orders from '../components/LastAdherents';
+import Chart from '../components/Dashboard/Chart';
+import Deposits from '../components/Dashboard/Deposits';
+import LastAdherents from '../components/Dashboard/LastAdherents';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -45,9 +29,7 @@ export default function Dashboard() {
       <Grid container spacing={3}>
         {/* Recent Orders */}
         <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Orders />
-          </Paper>
+            <LastAdherents/>
         </Grid>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>

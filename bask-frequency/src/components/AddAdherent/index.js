@@ -6,29 +6,21 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Slider from '@material-ui/core/Slider';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import { useHistory } from 'react-router-dom';
-import AddAdherentButton from '../components/AddAdherentButton';
+import AddAdherentButton from './AddAdherentButton';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    padding: theme.spacing(0),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
   },
-  fixedHeight: {
-    height: 555,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
     padding: theme.spacing(2)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
   },
   title: {
     textAlign: "center",
@@ -40,47 +32,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const marks = [
-{
-  value: 10,
-  label: '10€',
-},
-{
-  value: 30,
-  label: '30€',
-},
-{
-    value: 50,
-    label: '50€',
-},
-{
-    value: 70,
-    label: '70€',
-},
-{
-    value: 100,
-    label: '100€',
-},
-];
-
-function valuetext(value) {
-  return `${value}€`;
-}
-
 const cancel = (history) => {
   history.goBack();
 }
-
-// var adherent = {
-//   id: 0,
-//   date: "",
-//   name: "",
-//   firstname: "",
-//   lastname: "",
-//   email: "",
-//   phone: "",
-//   donation: 5.00,
-// };
 
 export default function AddAdherent(props) {
   const classes = useStyles();
@@ -95,9 +49,7 @@ export default function AddAdherent(props) {
     donationInput: false,
   })
   const [adherent, setAdherent] = React.useState({
-    id: 0,
     date: undefined,
-    name: undefined,
     firstname: "",
     lastname: "",
     email: "",
@@ -132,12 +84,6 @@ export default function AddAdherent(props) {
     setAdherent({...adherent, phone: event});
     updateAllForm();
   }
-  
-  const updateDonation = event => {
-    updateAllForm();
-    setAdherent({...adherent, donation: event});
-    updateAllForm();
-  }
 
   const updateAllForm = () => {
     setIsComplete(((
@@ -152,24 +98,24 @@ export default function AddAdherent(props) {
         display="flex"
         flexDirection="row"
       >
-          <Box flexGrow={1}>
-              <Button onClick={ () => {cancel(history)}}>
-                Annuler
-              </Button>
-          </Box>
-          <Box>
-            <AddAdherentButton
-              adherent={adherent}
-              disabled={isComplete}
-            />
-          </Box>
+        <Box flexGrow={1}>
+            <Button onClick={ () => {cancel(history)}}>
+              Annuler
+            </Button>
         </Box>
+        <Box>
+          <AddAdherentButton
+            adherent={adherent}
+            disabled={isComplete}
+          />
+        </Box>
+      </Box>
         <form className={classes.form} noValidate>
         <Typography component="h1" variant="h5" className={classes.title}>
             Ajouter Membre
         </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6} sm={6}>
               <TextField
                 name="firstName"
                 variant="outlined"
@@ -182,7 +128,7 @@ export default function AddAdherent(props) {
                 onChange={ (event) => { updateFirstname(event.target.value)} }
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -218,7 +164,7 @@ export default function AddAdherent(props) {
                 onChange={ (event) => { updatePhone(event.target.value)} }
               />
             </Grid>
-            <Grid item xs={12} className={classes.donation}>
+            {/* <Grid item xs={12} className={classes.donation}>
             <Typography id="discrete-slider-always" gutterBottom>
                 Donation
             </Typography>
@@ -234,7 +180,7 @@ export default function AddAdherent(props) {
                 valueLabelDisplay="auto"
                 onChange={ (event) => { updateDonation(event.target.value)} }
             />
-            </Grid>
+            </Grid> */}
           </Grid>
         </form>
       </div>

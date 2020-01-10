@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
         var token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, config.jwt.privateKey, { algorithm: 'HS256' }, (error, decoded) => {
             if (error) {
+                res.status(502);
                 res.json({"error": "Invalid token"});
             } else {
                 next();

@@ -1,22 +1,36 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import TopBar from './components/TopBar';
-import Dashboard from './views/Dashboard';
-import AddAdherent from './views/AddAdherent';
-import Adherents from './views/Adherents';
-import Footer from './components/Footer';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { theme } from './config/theme';
+
 import {
   Switch,
   Route,
   withRouter
 } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
+import store from './redux/store';
+import { connect } from 'react-redux';
+import * as adherents from './redux/actions/adherents';
+import * as login from './redux/actions/login';
+
+import TopBar from './components/navigation/TopBar';
+import Dashboard from './views/Dashboard';
+import AddAdherent from './components/AddAdherent';
+import Adherents from './views/Adherents';
+
+
+const mapDispatchToProps = dispatch => {
+  return  {
+    initData: () => dispatch(login.post(() => {
+        dispatch(adherents.get(store.getState().login.account.token));
+    }))
+  }
+}
+
+const styles = theme => ({
   root: {
     display: 'flex',
   },
@@ -42,45 +56,40 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
-}));
+});
 
-export default function App(props) {
+class App extends React.Component {
 
-  const RoutedTopBar = withRouter(props => <TopBar {...props}/>)
-  const classes = useStyles();
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: prefersDarkMode ? 'dark' : 'light',
-          primary: {
-            main: '#4caf50'
-          },
-        },
-      }),
-    [prefersDarkMode],
-  );
-  
-  return (
-    <div style={{display: 'flex'}}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <RoutedTopBar/>
-        <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <Container maxWidth="lg" className={classes.container}>
-              <Switch>
-                <Route exact path="/" component={Dashboard}/>
-                <Route path="/adherents" component={Adherents}/>
-                <Route path="/add-adherent" component={AddAdherent} />
-              </Switch>
-              <Box pt={4}>
-                <Footer/>
-              </Box>
-            </Container>
-        </main>
-      </ThemeProvider>
-    </div>
-);
+  componentDidMount = () => {
+    this.props.initData()
+  }
+
+  render = () => {
+    const RoutedTopBar = withRouter(props => <TopBar {...props}/>)
+    const classes = this.props.classes;
+
+    return (
+      <div className={classes.root}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <RoutedTopBar/>
+          <main className={classes.content}>
+              <div className={classes.appBarSpacer} />
+              <Container maxWidth="lg" className={classes.container}>
+                <Switch>
+                  <Route exact path="/" component={Dashboard}/>
+                  <Route path="/adherents" component={Adherents}/>
+                  <Route path="/add-adherent" component={AddAdherent} />
+                </Switch>
+                {/* <Box pt={4}>
+                  <Footer/>
+                </Box> */}
+              </Container>
+          </main>
+        </ThemeProvider>
+      </div>
+    );
+  }
 }
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(App));

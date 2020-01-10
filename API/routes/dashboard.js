@@ -1,9 +1,9 @@
 var express = require('express');
 var dashboard = express.Router();
 var adherents = require('../controllers/adherents');
-var middleware = require('../controllers/middleware');
+var authentication= require('../middlewares/authentication');
 
-dashboard.use(middleware)
+dashboard.use(authentication)
 .get('/adherents', adherents.get)
 .get('/adherents/:id', adherents.getById)
 .post('/adherents', adherents.post)

@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-id-generator": "^3.0.0",
@@ -17,7 +18,10 @@
     "react-scripts": "3.3.0",
     "react-transition-group": "^4.3.0",
     "recharts": "^2.0.0-beta.1",
-    "redux": "^4.0.5"
+    "reduce-reducers": "^1.0.4",
+    "redux": "^4.0.5",
+    "redux-async-initial-state": "^0.3.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

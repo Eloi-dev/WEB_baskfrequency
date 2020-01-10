@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addAdherent } from '../redux/actions';
+import * as adherents from '../../redux/actions/adherents';
 import Button from '@material-ui/core/Button';
 import nextId from 'react-id-generator';
-import { months, days } from '../models/Date'
+import { months, days } from '../../models/Date'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -37,9 +37,9 @@ class AddAdherentButton extends React.Component {
     }
 
     addAdherent = () => {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1Nzg0ODA1NTR9.RtSw6AAv8zGM47XhiYWVP4uGI1oA91ZEzUeOM2irHCY";
         this.makeDate();
-        this.makeId();
-        this.props.addAdherent(Object.assign({}, this.props.adherent));
+        this.props.post(token, Object.assign({}, this.props.adherent));
         this.setState({open: true});
     }
 
@@ -73,5 +73,5 @@ class AddAdherentButton extends React.Component {
 
 export default connect(
     null,
-    { addAdherent }
+    adherents
 )(AddAdherentButton);

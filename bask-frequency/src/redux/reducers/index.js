@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import adherents from './adherents';
 import treasury from './treasury';
+import login from './login';
 
-export default combineReducers({adherents, treasury});
+export default combineReducers({login, adherents, treasury});

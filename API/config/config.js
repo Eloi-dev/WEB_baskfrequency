@@ -11,7 +11,7 @@ const config = {
     },
     jwt: {
         privateKey: 'avaincresanspérilontrimphesansgloire'
-    }
+    },
 }
 
 module.exports = config

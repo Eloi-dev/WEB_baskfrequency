@@ -23,7 +23,7 @@ class Adherents {
 
     get = (pushBack) => {
         console.log("[Adherents]: Selecting all...")
-        this.mysql.query("SELECT * FROM adherents", (error, result, fields) => {
+        this.mysql.query("SELECT * FROM adherents ORDER BY id DESC", (error, result, fields) => {
             if (error) throw error;
             console.log("[Adherents]: Select success.");
             pushBack(result);

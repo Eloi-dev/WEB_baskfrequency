@@ -3,7 +3,7 @@ var adherents = new Adherents();
 
 const getAdherents = (req, res) => {
     adherents.get(result => {
-        res.json({route: '/adherents', method: 'GET', data: result});
+        res.json({route: '/adherents', method: 'GET', adherents: Object.values(result)});
     });
 }
 
@@ -23,7 +23,7 @@ const postAdherents = (req, res) => {
             res.json({route: '/adherents', method: 'POST', data: {error: 'Unfullfilled form.'}});
     } else {
         adherents.insert(adherent, result => {
-            res.json({route: '/adherents', method: 'POST', data: result});
+            res.json({route: '/adherents', method: 'POST', adherent: result});
         });
     }
 }
