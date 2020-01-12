@@ -1,2 +1,2 @@
 # WEB_baskfrequency
-Bask Frequency association website
+Bask Frequency dashboard website
